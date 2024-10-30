@@ -1,19 +1,20 @@
 //alert("테스트")
 //1. 첫번째 버튼을 클릭하면 alert메세지 '클릭됨'을 화면에 출력
 
-const btns = document.querySelectorAll("button.drum"); //7개 버튼 컬렉션
+const btns = document.querySelectorAll("button.drum"); //7개 버튼 컬렉션  css에서 button.drum은 버튼태그에 클래스이름에  drum 들어간것 다 선택
 //모든 버튼 이벤트
 for(let i = 0; i<btns.length; i++){
     btns[i].addEventListener("click",handleClick);   //event객체에 타겟을 조회한후 어떤 버튼인지 알게 됨.    
     }
 //키보드 이벤트
 document.addEventListener("keydown",handlekeyboard)
-// document.addEventListener("keydown",
-//     ()=>{console.log(e)})
+document.addEventListener("keydown",
+     (e)=>{console.log(e)})
 
 function handlekeyboard(e){
     let text = e.key;
     drumSound(text) 
+    animation(e.key)
 }
 
 function handleClick(e){
@@ -29,29 +30,38 @@ function handleClick(e){
         drumSound(click);
 }
 
+
 function drumSound(text) {
     if(text =='w'){
         var audio = new Audio("sounds/tom-1.mp3")    //foreach문으로하면 .찍고 함수써주면 됨.
         audio.play();
         } else if(text =='a') {
-        var audio = new Audio("sounds/tom-2.mp3")    //foreach문으로하면 .찍고 함수써주면 됨.
+        var audio = new Audio("sounds/tom-2.mp3")    
         audio.play();
         } else if(text =='s') {
-        var audio = new Audio("sounds/tom-3.mp3")    //foreach문으로하면 .찍고 함수써주면 됨.
+        var audio = new Audio("sounds/tom-3.mp3")    
         audio.play();
         } else if(text =='d') {
-        var audio = new Audio("sounds/tom-4.mp3")    //foreach문으로하면 .찍고 함수써주면 됨.
+        var audio = new Audio("sounds/tom-4.mp3")    
         audio.play();
         } else if(text =='d') {
-        var audio = new Audio("sounds/kick-bass.mp3")    //foreach문으로하면 .찍고 함수써주면 됨.
+        var audio = new Audio("sounds/kick-bass.mp3")
         audio.play();
         } else if(text =='d') {
-        var audio = new Audio("sounds/crash.mp3")    //foreach문으로하면 .찍고 함수써주면 됨.
+        var audio = new Audio("sounds/crash.mp3")    
         audio.play();
         } else if(text =='d') {
-        var audio = new Audio("sounds/snare.mp3")    //foreach문으로하면 .찍고 함수써주면 됨.
+        var audio = new Audio("sounds/snare.mp3")    
         audio.play();
         }
+}
+
+function animation(key) {
+    const btn = document.querySelector("."+key);
+    btn.classList.add("pressed"); //클래스 추가
+    setTimeout( ()=>{
+        btn.classList.remove("pressed")
+    }   ,50);   //0.2초후 누르는 애니메이션 클래스 제거   
 }
 
 
@@ -64,4 +74,10 @@ function drumSound(text) {
 // btn1.addEventListener("click",fskC)
 //자바스크립트로 audio play 하는 방법 검색하여 alert함수 대신에 입력하여 버튼을 
 //클릭하면 드럼 소리가 나도록 한다.
+//***target과 currentTarget 차이점 */
 
+ document.querySelector("button.drum").addEventListener("click", function(e)
+  {
+     console.log("target:", e.target);           // 실제로 클릭된 요소
+     console.log("currentTarget:", e.currentTarget); // 이벤트 리스너가 붙어 있는 요소 (여기선 "parent")
+ });
